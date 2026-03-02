@@ -18,7 +18,7 @@
                         <a href="${pageContext.request.contextPath}/home" class="logo">LUMINA</a>
                         <nav class="user-nav">
                             <a href="${pageContext.request.contextPath}/profile">Account</a>
-                            <a href="${pageContext.request.contextPath}/order">Orders</a>
+                            <a href="${pageContext.request.contextPath}/order" class="active">Orders</a>
                             <a href="${pageContext.request.contextPath}/cart">Cart</a>
                         </nav>
                     </div>
@@ -51,6 +51,7 @@
                         </div>
                     </main>
                 </c:if>
+
                 <c:if test="${!empty userOrderMap}">
                     <main class="orders-section">
                         <div class="page-header">
@@ -111,12 +112,43 @@
                                     </c:forEach>
                                 </div>
 
+                                <c:if test="${order.deliveryStatus != 'CANCELLED'}">
+                                    <div class="order-footer">
+                                        <form class="order-cancellation">
+                                            <input type="hidden" name="orderId" value="${order.id}">
+                                            <button type="submit" class="btn-cancel">Cancel Order</button>
+                                        </form>
+                                    </div>
+                                </c:if>
+
                             </div>
                         </c:forEach>
 
                     </main>
                 </c:if>
 
+                <script>
+                    document.querySelectorAll('.order-cancellation').forEach(form => {
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+
+                            const formData = new FormData(this);
+                            const params = new URLSearchParams(formData).toString();
+
+                            fetch('${pageContext.request.contextPath}/order/cancel', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: params
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        location.reload();
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        });
+                    });
+                </script>
 
             </body>
 

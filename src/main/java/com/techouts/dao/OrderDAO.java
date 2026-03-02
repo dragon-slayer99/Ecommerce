@@ -16,6 +16,7 @@ import com.techouts.entities.CartItem;
 import com.techouts.entities.Order;
 import com.techouts.entities.OrderItem;
 import com.techouts.entities.User;
+import com.techouts.utils.enums.DeliveryStatus;
 import com.techouts.utils.hibernateutil.HibernateUtil;
 
 public class OrderDAO {
@@ -92,6 +93,35 @@ public class OrderDAO {
         }
 
         return orderItems;
+
+    }
+
+    public static boolean changeOrderStatus(int orderId, String status) {
+
+        Transaction tx = null;
+
+        try(Session session = HibernateUtil.getHibernateSession()) {
+
+            tx = session.beginTransaction();
+
+            Order order = session.get(Order.class, orderId);
+
+            if(order != null) {
+
+                order.setDeliveryStatus(DeliveryStatus.valueOf(status.toUpperCase()));
+
+            }
+
+            tx.commit();
+
+            return true;
+
+        } catch (Exception e) {
+            if(tx != null) tx.rollback();
+            System.err.println(e);
+        }
+
+        return false;
 
     }
 

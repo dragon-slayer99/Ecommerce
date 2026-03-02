@@ -41,10 +41,11 @@
                                     <th>Name</th>
                                     <th>Category</th>
                                     <th>Price</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 <c:forEach var="product" items="${requestScope.productList}">
 
                                     <tr>
@@ -58,6 +59,12 @@
                                             <fmt:formatNumber value="${product.price}" type="number"
                                                 minFractionDigits="2" maxFractionDigits="2" />
                                         </td>
+                                        <td>
+                                            <form class="action-links">
+                                                <input type="hidden" name="productId" value="${product.id}">
+                                                <button type="submit" class="btn-delete">Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
 
                                 </c:forEach>
@@ -67,7 +74,28 @@
                     </div>
 
                 </main>
+                <script>
+                    document.querySelectorAll('.action-links').forEach(form => {
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
 
+                            const formData = new FormData(this);
+                            const params = new URLSearchParams(formData).toString();
+
+                            fetch('${pageContext.request.contextPath}/admin/delete', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: params
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        location.reload();
+                                    }
+                                })
+                                .catch(err => console.error(err));
+                        });
+                    });
+                </script>
             </body>
 
             </html>

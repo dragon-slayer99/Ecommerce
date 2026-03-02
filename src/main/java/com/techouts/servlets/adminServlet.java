@@ -12,10 +12,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/admin/*", "/admin"})
+@WebServlet(urlPatterns = { "/admin/*", "/admin" })
 public class adminServlet extends HttpServlet {
 
-    private void diplayAllProducts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void diplayAllProducts(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         List<Product> productsList = ProductDAO.getProductsList();
 
         req.setAttribute("productList", productsList);
@@ -23,12 +24,36 @@ public class adminServlet extends HttpServlet {
         req.getRequestDispatcher("/jsp/admin/allproducts.jsp").forward(req, resp);
     }
 
+    private void deleteProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        int productId = Integer.parseInt(req.getParameter("productId"));
+        boolean productDeletionStatus = ProductDAO.deleteProductById(productId);
+        resp.setContentType("text/plain");
+        resp.getWriter().write(productDeletionStatus ? "success" : "failed");
+
+    }
+
+    private void addProduct(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String name = req.getParameter("productName");
+        float price = Float.parseFloat(req.getParameter("productPrice"));
+        String description = req.getParameter("productDescription");
+        String category = req.getParameter("productCategory");
+        String productImage = req.getParameter("productImage");
+
+        boolean productInsertionStatus = ProductDAO.addProduct(name, category, price, description, productImage);
+
+        resp.setContentType("text/plain");
+        resp.getWriter().write(productInsertionStatus ? "success" : "failed");
+
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String path = req.getPathInfo();
 
-        if("/addproduct".equals(path)) {
+        if ("/addproduct".equals(path)) {
 
             req.getRequestDispatcher("/jsp/admin/addproducts.jsp").forward(req, resp);
 
@@ -43,16 +68,15 @@ public class adminServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("productName");
-        float price = Float.parseFloat(req.getParameter("productPrice"));
-        String description = req.getParameter("productDescription");
-        String category = req.getParameter("productCategory");
-        String productImage = req.getParameter("productImage");
+        String path = req.getPathInfo();
 
-        boolean productInsertionStatus = ProductDAO.addProduct(name, category, price, description, productImage);
+        System.out.println(path);
 
-        resp.setContentType("text/plain");
-        resp.getWriter().write(productInsertionStatus ? "success" : "failed");
+        if("/addproduct?".equals(path)) {
+            addProduct(req, resp);
+        } else {
+            deleteProduct(req, resp);
+        }
 
     }
 

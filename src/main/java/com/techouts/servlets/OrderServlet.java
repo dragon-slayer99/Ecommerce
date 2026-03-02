@@ -15,24 +15,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/order")
+@WebServlet(urlPatterns = { "/order", "/order/*" })
 public class OrderServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        Map<Order, List<OrderItem>> userOrderMap = OrderDAO.getOrderItems((User)req.getSession(false).getAttribute("user"));
-
-        System.out.println(userOrderMap);
-        req.setAttribute("userOrderMap", userOrderMap);
-
-        req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    private void placeOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String address = req.getParameter("address");
         System.out.println(address);
         String paymentMethod = req.getParameter("paymentMethod");
@@ -58,6 +44,49 @@ public class OrderServlet extends HttpServlet {
 
         resp.setContentType("text/plain");
         resp.getWriter().write(orderCreationStatus ? "success" : "failed");
+    }
+
+    private void cancelOrder(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        if (req.getParameter("orderId") == null)
+            return;
+
+        int orderId = Integer.parseInt(req.getParameter("orderId"));
+
+        boolean cancellationStatus = OrderDAO.changeOrderStatus(orderId, "cancelled");
+
+        System.out.println(cancellationStatus);
+        resp.setContentType("text/plain");
+        resp.getWriter().write(cancellationStatus ? "success" : "failed");
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        Map<Order, List<OrderItem>> userOrderMap = OrderDAO
+                .getOrderItems((User) req.getSession(false).getAttribute("user"));
+
+        System.out.println(userOrderMap);
+        req.setAttribute("userOrderMap", userOrderMap);
+
+        req.getRequestDispatcher("/jsp/order.jsp").forward(req, resp);
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String path = req.getPathInfo();
+
+        if (path == null) {
+
+            placeOrder(req, resp);
+
+        } else if ("/cancel".equals(path)) {
+
+            cancelOrder(req, resp);
+
+        }
 
     }
 

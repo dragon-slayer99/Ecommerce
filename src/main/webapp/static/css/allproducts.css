@@ -228,26 +228,25 @@
             font-size: 1rem;
         }
 
-        .action-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        .action-links a {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: underline;
-            color: var(--color-text);
-            transition: opacity 0.3s;
-        }
-
-        .action-links a:hover {
-            opacity: 0.6;
-        }
-
-        .action-links a.delete {
+/* NEW: Themed Delete Button */
+        .btn-delete {
+            background-color: transparent;
             color: #d9534f;
-            /* Subtle red for delete action */
+            border: 1px solid #d9534f;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-family: var(--font-main);
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background-color: #d9534f;
+            color: #ffffff;
         }
 
         /* =========================================

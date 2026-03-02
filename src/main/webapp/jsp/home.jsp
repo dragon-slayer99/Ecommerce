@@ -19,11 +19,6 @@
                     <div class="container header-content">
                         <a href="${pageContext.request.contextPath}/home" class="logo">LUMINA</a>
 
-                        <div class="search-bar">
-                            <input type="text" placeholder="Search for anything...">
-                            <button type="submit">Search</button>
-                        </div>
-
                         <nav class="user-nav">
                             <a href="${pageContext.request.contextPath}/profile">Account</a>
                             <a href="${pageContext.request.contextPath}/order">Orders</a>
@@ -74,27 +69,10 @@
                         <p>Discover our complete collection of minimalist essentials, meticulously crafted for your
                             everyday
                             life.</p>
-
-                        <div class="category-filters">
-                            <button class="filter-btn active">All</button>
-                            <button class="filter-btn">Electronics</button>
-                            <button class="filter-btn">Footwear</button>
-                            <button class="filter-btn">Apparel</button>
-                            <button class="filter-btn">Home</button>
-                        </div>
                     </section>
 
                     <div class="toolbar">
                         <span class="item-count">Showing ${fn:length(productsList)} products</span>
-                        <div class="sort-options">
-                            <label for="sort">Sort by: </label>
-                            <select id="sort" class="sort-dropdown">
-                                <option value="featured">Featured</option>
-                                <option value="price-low">Price: Low to High</option>
-                                <option value="price-high">Price: High to Low</option>
-                                <option value="newest">Newest Arrivals</option>
-                            </select>
-                        </div>
                     </div>
 
                     <main class="products-container">

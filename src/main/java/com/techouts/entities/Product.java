@@ -4,12 +4,16 @@ import com.techouts.utils.logging.BaseHibernateLogger;
 import com.techouts.utils.enums.Category;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.Cache;
 
 @Entity
 @Table(name = "products")
 @Cacheable
-@Cache (usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Product extends BaseHibernateLogger {
 
     @Id
@@ -20,7 +24,6 @@ public class Product extends BaseHibernateLogger {
 
     private float price;
 
-
     @Column(name = "product_description")
     private String productDescription;
 
@@ -30,7 +33,14 @@ public class Product extends BaseHibernateLogger {
     @Column(name = "product_image")
     private String productImage;
 
-    public Product() {}
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "productId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public Product() {
+    }
 
     public Product(String name, float price, String productDescription, Category category, String productImage) {
 
@@ -88,5 +98,21 @@ public class Product extends BaseHibernateLogger {
 
     public void setProductImage(String productImage) {
         this.productImage = productImage;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }

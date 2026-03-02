@@ -94,4 +94,28 @@ public class ProductDAO {
 
     }
 
+    public static boolean deleteProductById(int id) {
+
+        Transaction tx = null;
+        try(Session session = HibernateUtil.getHibernateSession()) {
+
+            tx = session.beginTransaction();
+
+            Product product = session.get(Product.class, id);
+
+            if(product != null) {
+                session.remove(product);
+            }
+
+            tx.commit();
+            return true;
+
+        } catch(Exception e) {
+            if(tx != null) tx.rollback();
+            System.err.println(e);
+        }
+
+        return false;
+    }
+
 }
