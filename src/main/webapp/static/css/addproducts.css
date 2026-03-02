@@ -1,0 +1,328 @@
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    :root {
+        --color-bg: #ffffff;
+        --color-text: #111111;
+        --color-text-light: #666666;
+        --color-border: #eaeaec;
+        --color-accent: #111111;
+        --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+        background-color: #fafafa;
+        color: var(--color-text);
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    /* =========================================
+           2. ADMIN HEADER
+           ========================================= */
+    .site-header {
+        border-bottom: 1px solid var(--color-border);
+        padding: 20px 0;
+        position: sticky;
+        top: 0;
+        background: var(--color-text);
+        /* Dark header for Admin area */
+        z-index: 100;
+    }
+
+    .container {
+        /* max-width: 1200px; */
+        margin: 0 auto;
+        padding: 0 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+    .logo span {
+        font-weight: 400;
+        color: #cccccc;
+        font-size: 1rem;
+        letter-spacing: 0;
+        margin-left: 8px;
+    }
+
+    .user-nav {
+        display: flex;
+        gap: 30px;
+    }
+
+    .user-nav a {
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: #ffffff;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+    }
+
+    .user-nav a.active,
+    .user-nav a:hover {
+        opacity: 1;
+    }
+
+    /* =========================================
+           3. ADMIN PANEL LAYOUT
+           ========================================= */
+    .admin-section {
+        padding: 4rem 5%;
+        flex-grow: 1;
+        max-width: 1000px;
+        /* Slightly narrower for forms */
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 2.5rem;
+    }
+
+    .admin-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+        text-transform: uppercase;
+        line-height: 1;
+    }
+
+    .back-link {
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: underline;
+        color: var(--color-text-light);
+        transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+        color: var(--color-text);
+    }
+
+    /* =========================================
+           4. FORM CARD & INPUTS
+           ========================================= */
+    .form-card {
+        background-color: var(--color-bg);
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        padding: 3rem;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.02);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem 2rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--color-text);
+        margin-bottom: 0.5rem;
+    }
+
+    /* General Inputs */
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        font-family: var(--font-main);
+        font-size: 0.95rem;
+        color: var(--color-text);
+        background-color: #fafafa;
+        outline: none;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: var(--color-accent);
+        background-color: #ffffff;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    /* Price Input Wrapper */
+    .price-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .price-wrapper span {
+        position: absolute;
+        left: 15px;
+        color: var(--color-text-light);
+        font-weight: 600;
+    }
+
+    .price-wrapper input {
+        padding-left: 30px;
+        /* Make room for the $ symbol */
+    }
+
+    /* Custom Image Upload Box */
+    .image-upload-box {
+        border: 2px dashed var(--color-border);
+        border-radius: 4px;
+        padding: 2rem;
+        text-align: center;
+        background-color: #fafafa;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .image-upload-box:hover {
+        border-color: var(--color-text);
+        background-color: #f0f0f0;
+    }
+
+    .image-upload-box input[type="file"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .image-upload-content {
+        pointer-events: none;
+    }
+
+    .image-upload-content svg {
+        margin-bottom: 10px;
+        color: var(--color-text-light);
+    }
+
+    .image-upload-content p {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--color-text);
+    }
+
+    .image-upload-content span {
+        font-size: 0.8rem;
+        color: var(--color-text-light);
+    }
+
+    /* =========================================
+           5. FORM ACTIONS
+           ========================================= */
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--color-border);
+    }
+
+    .btn-outline {
+        background-color: transparent;
+        color: var(--color-accent);
+        border: 1px solid var(--color-border);
+        padding: 14px 30px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+        border-color: var(--color-accent);
+    }
+
+    .btn-primary {
+        background-color: var(--color-accent);
+        color: #fff;
+        border: 2px solid var(--color-accent);
+        padding: 14px 40px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: transparent;
+        color: var(--color-accent);
+    }
+
+    /* =========================================
+           6. RESPONSIVE DESIGN
+           ========================================= */
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .admin-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .form-card {
+            padding: 2rem 1.5rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .btn-outline,
+        .btn-primary {
+            width: 100%;
+            text-align: center;
+        }
+    }

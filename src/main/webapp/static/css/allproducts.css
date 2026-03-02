@@ -1,0 +1,265 @@
+        /* =========================================
+           1. RESET & THEME VARIABLES
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        :root {
+            --color-bg: #ffffff;
+            --color-text: #111111;
+            --color-text-light: #666666;
+            --color-border: #eaeaec;
+            --color-accent: #111111;
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            color: var(--color-text);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. ADMIN HEADER
+           ========================================= */
+        .site-header {
+            border-bottom: 1px solid var(--color-border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background: var(--color-text);
+            /* Dark header for Admin area */
+            z-index: 100;
+        }
+
+        .container {
+            /* max-width: 1200px; */
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .logo span {
+            font-weight: 400;
+            color: #cccccc;
+            font-size: 1rem;
+            letter-spacing: 0;
+            margin-left: 8px;
+        }
+
+        .user-nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .user-nav a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #ffffff;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .user-nav a.active,
+        .user-nav a:hover {
+            opacity: 1;
+        }
+
+        /* =========================================
+           3. DASHBOARD LAYOUT & HEADER
+           ========================================= */
+        .admin-section {
+            padding: 4rem 5%;
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: #fff;
+            border: 2px solid var(--color-accent);
+            padding: 12px 24px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--color-accent);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.96);
+            opacity: 0.8;
+            transition: transform 0.05s ease, opacity 0.05s ease;
+        }
+
+        /* =========================================
+           4. DATA TABLE STYLING
+           ========================================= */
+        .table-container {
+            background-color: var(--color-bg);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.02);
+            overflow-x: auto;
+            /* Enables horizontal scroll on small screens */
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 800px;
+            /* Ensures the table doesn't squish too much */
+        }
+
+        .product-table th {
+            padding: 1.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-light);
+            border-bottom: 2px solid var(--color-border);
+            background-color: #fafafa;
+        }
+
+        .product-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--color-border);
+            vertical-align: middle;
+            color: var(--color-text);
+        }
+
+        .product-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .product-table tr:hover td {
+            background-color: #fafafa;
+        }
+
+        /* Specific Table Data Styling */
+        .id-badge {
+            font-family: monospace;
+            background-color: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+        }
+
+        .thumb-cell {
+            width: 80px;
+        }
+
+        .product-thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            display: block;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .category-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-light);
+        }
+
+        .product-price {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .action-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-links a {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: underline;
+            color: var(--color-text);
+            transition: opacity 0.3s;
+        }
+
+        .action-links a:hover {
+            opacity: 0.6;
+        }
+
+        .action-links a.delete {
+            color: #d9534f;
+            /* Subtle red for delete action */
+        }
+
+        /* =========================================
+           5. RESPONSIVE DESIGN
+           ========================================= */
+        @media (max-width: 600px) {
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-nav {
+                display: none;
+            }
+        }

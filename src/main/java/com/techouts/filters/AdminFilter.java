@@ -2,6 +2,9 @@ package com.techouts.filters;
 
 import java.io.IOException;
 
+import com.techouts.entities.User;
+import com.techouts.utils.HashPasswordUtil;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
@@ -10,13 +13,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+@WebFilter(urlPatterns = { "/admin", "/admin/*" })
+public class AdminFilter extends HttpFilter {
 
-@WebFilter("/home")
-public class HomeFilter extends HttpFilter {
+     
 
     @Override
     public void init() throws ServletException {
-        System.out.println("HOME FILTER INITIALIZED....");
+        System.out.println("ADMIN FILTER INITIALIZED....");
     }
 
     @Override
@@ -33,13 +37,23 @@ public class HomeFilter extends HttpFilter {
             return;
         }
 
+        User adminInQuestion = (User)session.getAttribute("user");
+
+        if(!"admin".equals(adminInQuestion.getName().toLowerCase()) || !HashPasswordUtil.getHashedPassword("Admin@123").equals(adminInQuestion.getPassword())) {
+
+            res.sendRedirect(req.getContextPath() + "/home");
+
+        }
+
         chain.doFilter(req, res);
 
     }
 
     @Override
     public void destroy() {
-        System.out.println("HOME FILTER DESTROYED!!!!");
+        System.out.println("ADMIN FILTER DESTROYED!!!!");
     }
+
+    
 
 }

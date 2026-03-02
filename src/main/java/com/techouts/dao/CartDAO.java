@@ -76,7 +76,7 @@ public class CartDAO {
         } catch (Exception e) {
             if (tx != null)
                 tx.rollback();
-            e.printStackTrace();
+            System.err.println(e);
         }
 
         return false;

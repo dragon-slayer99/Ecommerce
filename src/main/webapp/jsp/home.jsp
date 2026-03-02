@@ -25,7 +25,7 @@
                         </div>
 
                         <nav class="user-nav">
-                            <a href="${pageContext.request.contextPath}/user">Account</a>
+                            <a href="${pageContext.request.contextPath}/profile">Account</a>
                             <a href="${pageContext.request.contextPath}/order">Orders</a>
                             <a href="${pageContext.request.contextPath}/cart">Cart</a>
                         </nav>

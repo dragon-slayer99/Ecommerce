@@ -1,10 +1,17 @@
 package com.techouts.entities;
 
-import com.techouts.utils.logging.BaseHibernateLogger;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-import java.time.LocalDateTime;
+import com.techouts.utils.logging.BaseHibernateLogger;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
@@ -23,9 +30,8 @@ public class User extends BaseHibernateLogger {
     @Column(nullable = false)
     private String password;
 
-    @CreationTimestamp
     @Column(name = "joined_date")
-    private LocalDateTime joinedDate;
+    private LocalDate joinedDate;
 
     @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL)
     private Cart cart;
@@ -38,12 +44,19 @@ public class User extends BaseHibernateLogger {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.joinedDate = LocalDate.now();
     }
 
     public User(String email, String password) {
 
         this.email = email;
         this.password = password;
+    }
+
+    public String getFormattedJoinedDate() {
+        if (joinedDate == null)
+            return "";
+        return joinedDate.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"));
     }
 
     public int getId() {
@@ -78,11 +91,11 @@ public class User extends BaseHibernateLogger {
         this.password = password;
     }
 
-    public LocalDateTime getJoinedDate() {
+    public LocalDate getJoinedDate() {
         return joinedDate;
     }
 
-    public void setJoinedDate(LocalDateTime joinedDate) {
+    public void setJoinedDate(LocalDate joinedDate) {
         this.joinedDate = joinedDate;
     }
 

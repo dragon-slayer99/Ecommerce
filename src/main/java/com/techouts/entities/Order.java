@@ -1,13 +1,23 @@
 package com.techouts.entities;
 
-import com.techouts.utils.logging.BaseHibernateLogger;
-import jakarta.persistence.*;
-import com.techouts.utils.enums.DeliveryStatus;
-
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.techouts.utils.enums.DeliveryStatus;
+import com.techouts.utils.logging.BaseHibernateLogger;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
@@ -31,11 +41,9 @@ public class Order extends BaseHibernateLogger {
     @Column(name = "delivery_date")
     private LocalDate estimatedDeliveryDate;
 
-  
     @Column(name = "ordered_date")
     private LocalDate orderedDate;
 
-    
     @Column(name = "payment_type")
     private String paymentType;
 
@@ -45,7 +53,8 @@ public class Order extends BaseHibernateLogger {
     @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems;
 
-    public Order() {}
+    public Order() {
+    }
 
     public Order(User userId, float totalPrice, LocalDate estimatedDeliveryDate, String paymentType, String address) {
 
@@ -56,6 +65,12 @@ public class Order extends BaseHibernateLogger {
         this.address = address;
         this.orderedDate = LocalDate.now();
 
+    }
+
+    public String getFormattedOrderedDate() {
+        if (orderedDate == null)
+            return "";
+        return orderedDate.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"));
     }
 
     public int getId() {

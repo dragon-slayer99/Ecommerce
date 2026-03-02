@@ -1,12 +1,12 @@
 package com.techouts.utils.logging.servletlogger;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.servlet.ServletRequestEvent;
 import jakarta.servlet.ServletRequestListener;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @WebListener
 public class RequestListener implements ServletRequestListener {
@@ -16,6 +16,7 @@ public class RequestListener implements ServletRequestListener {
                 + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MMM-uuuu HH:mm:ss")) + ": " + s);
     }
 
+    @Override
     public void requestInitialized(ServletRequestEvent sre) {
 
         HttpServletRequest req = (HttpServletRequest) sre.getServletRequest();
@@ -32,12 +33,15 @@ public class RequestListener implements ServletRequestListener {
             printLog("CART REQUEST RECEIVED....");
         } else if (url.contains("/order")) {
             printLog("ORDER REQUEST RECEIVED....");
+        } else if (url.contains("/profile")) {
+            printLog("PROFILE REQUEST RECEIVED....");
         } else {
             printLog("UNKNOWN REQUEST RECEIVED....");
         }
 
     }
 
+    @Override
     public void requestDestroyed(ServletRequestEvent sre) {
 
         HttpServletRequest req = (HttpServletRequest) sre.getServletRequest();
@@ -53,7 +57,9 @@ public class RequestListener implements ServletRequestListener {
         } else if (url.contains("/cart")) {
             printLog("CART REQUEST DESTROYED....");
         } else if (url.contains("/order")) {
-            printLog("ORDER REQUEST RECEIVED....");
+            printLog("ORDER REQUEST DESTROYED....");
+        } else if (url.contains("/profile")) {
+            printLog("PROFILE REQUEST DESTROYED....");
         } else {
             printLog("UNKNOWN REQUEST DESTROYED....");
         }

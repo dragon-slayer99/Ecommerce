@@ -19,11 +19,9 @@
                     <div class="container">
                         <a href="${pageContext.request.contextPath}/home" class="logo">LUMINA</a>
                         <nav class="user-nav">
-                    
-                            <a href="${pageContext.request.contextPath}/user">Account</a>
+                            <a href="${pageContext.request.contextPath}/profile">Account</a>
                             <a href="${pageContext.request.contextPath}/order">Orders</a>
                             <a href="${pageContext.request.contextPath}/cart">Cart</a>
-                     
                         </nav>
                     </div>
                 </header>
@@ -33,14 +31,15 @@
                     <div class="product-grid">
 
                         <div class="image-stack">
-                            <img src="${requestScope.productDetail.productImage}"
-                                alt="Lumina Pro Laptop Front">
+                            <img src="${requestScope.productDetail.productImage}" alt="Lumina Pro Laptop Front">
                         </div>
 
                         <div class="product-details">
                             <h1 class="product-title">${requestScope.productDetail.name}</h1>
-                            <span class="product-price"><fmt:formatNumber value="${requestScope.productDetail.price}"
-                                            type="number" minFractionDigits="2" maxFractionDigits="2" /></span>
+                            <span class="product-price">
+                                <fmt:formatNumber value="${requestScope.productDetail.price}" type="number"
+                                    minFractionDigits="2" maxFractionDigits="2" />
+                            </span>
 
                             <p class="product-description">
                                 ${requestScope.productDetail.productDescription}

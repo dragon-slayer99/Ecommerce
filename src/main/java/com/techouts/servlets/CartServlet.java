@@ -119,7 +119,6 @@ public class CartServlet extends HttpServlet {
                 calculateTotalCartPrice(req, resp, (User) req.getSession(false).getAttribute("user"), null));
 
         String path = req.getPathInfo();
-        System.out.println(path);
 
         switch (path) {
             case "/add" -> {

@@ -18,7 +18,7 @@
                     <div class="container">
                         <a href="${pageContext.request.contextPath}/home" class="logo">LUMINA</a>
                         <nav class="user-nav">
-                            <a href="${pageContext.request.contextPath}/user">Account</a>
+                            <a href="${pageContext.request.contextPath}/profile">Account</a>
                             <a href="${pageContext.request.contextPath}/order">Orders</a>
                             <a href="${pageContext.request.contextPath}/cart">Cart</a>
                         </nav>
@@ -50,7 +50,7 @@
                         </div>
                     </section>
                 </c:if>
-                
+
                 <c:if test="${!empty cartItemsList}">
                     <main class="cart-section">
                         <div class="cart-header">
